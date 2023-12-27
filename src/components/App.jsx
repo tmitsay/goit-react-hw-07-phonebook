@@ -35,7 +35,7 @@ export const App = () => {
 
       {contacts.length > 0 && !error && !isLoading && <ContactList />}
       {isLoading && <Loader />}
-      {error ? <Error /> : <ContactList />}
+      {error && <Error /> && <ContactList />}
     </div>
   );
 };
