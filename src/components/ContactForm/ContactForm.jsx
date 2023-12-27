@@ -20,20 +20,25 @@ export const ContactForm = () => {
   const handlerSubmit = event => {
     event.preventDefault();
 
-    const data = { name, number };
-    const newObj = { ...data, id: nanoid() };
+    // const data = { name, number };
+    // const newObj = { ...data, id: nanoid() };
 
-    const isInContacts = (contacts, newObj) => {
-      return contacts.find(
-        ({ name }) => name.toLowerCase() === newObj.name.toLowerCase()
-      );
-    };
-    if (isInContacts(contacts, newObj) !== undefined) {
-      alert(`${newObj.name} is already in contacts`);
+    // const isInContacts = (contacts, newObj) => {
+    //   return contacts.find(
+    //     ({ name }) => name.toLowerCase() === newObj.name.toLowerCase()
+    //   );
+    // };
+
+    const isInContacts = contacts.some(
+      contact => contact.name.toLowerCase().trim() === name.toLowerCase().trim()
+    );
+
+    if (isInContacts) {
+      alert(`${name} is already in contacts`);
       return;
     }
 
-    dispatch(postContactThunk(newObj));
+    dispatch(postContactThunk({ name, number }));
     setName('');
     setNumber('');
   };
@@ -50,6 +55,7 @@ export const ContactForm = () => {
         setNumber(value);
         break;
       default:
+        return;
     }
   };
 

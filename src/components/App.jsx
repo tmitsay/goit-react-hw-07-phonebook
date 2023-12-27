@@ -1,4 +1,5 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
@@ -10,10 +11,17 @@ import {
   selectContacts,
 } from '../redux/selectors';
 
+import { getContactsThunk } from 'services/fetchContacts';
+
 export const App = () => {
   const contacts = useSelector(selectContacts);
   const error = useSelector(selectError);
   const isLoading = useSelector(selectIsLoading);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getContactsThunk());
+  }, [dispatch]);
 
   return (
     <div>
